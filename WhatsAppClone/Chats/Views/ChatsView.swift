@@ -33,6 +33,7 @@ struct ChatsView: View {
             .padding(.horizontal)
             .navigationDestination(item: $selectedChat) { chat in
                 ChatDetail(userChat: chat)
+                    .toolbar(.hidden, for: .tabBar)
             }
             .sheet(isPresented: $newChat, content: {
                 UsersSheet(user: $selectionUser)

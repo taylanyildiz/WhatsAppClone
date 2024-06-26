@@ -7,10 +7,14 @@
 
 import SwiftUI
 
-struct ChatDetail: View {
+
+    struct ChatDetail: View {
     @State private var message: String = ""
+    @State private var scrollId: Message.ID?
     
+    /// User chat
     @State var userChat: UserMessage
+    
     var body: some View {
         NavigationStack {
             VStack {
@@ -27,6 +31,7 @@ struct ChatDetail: View {
                                 Text("23:03")
                                     .font(.footnote)
                             }
+                            .id(chat.id)
                             .padding()
                             .background(
                                 RoundedRectangle(cornerRadius: 20.0)
@@ -37,6 +42,7 @@ struct ChatDetail: View {
                     }
                     .padding()
                 }
+                .scrollPosition(id: $scrollId)
                 Spacer()
                 HStack {
                     Button {
@@ -74,6 +80,10 @@ struct ChatDetail: View {
                             let newMessage = Message(sender: me, receiver: userChat.user, message: message)
                             messages.append(newMessage)
                             userChat.addMessage(newMessage)
+                            withAnimation {
+                                scrollId = newMessage.id
+                            }
+                            message = ""
                         } label: {
                             Image(systemName: "paperplane.fill")
                                 .foregroundStyle(.black)

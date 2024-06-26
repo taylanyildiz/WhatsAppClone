@@ -6,3 +6,9 @@
 //
 
 import Foundation
+
+
+struct History: Hashable, Identifiable {
+    var id: String { image }
+    let image: String
+}

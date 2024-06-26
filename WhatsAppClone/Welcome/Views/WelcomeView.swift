@@ -16,13 +16,14 @@ struct WelcomeView: View {
                     .font(.title)
                     .fontWeight(.bold)
                 WelcomeText()
-                Button {
-                    
+                NavigationLink {
+                    LoginView()
                 } label: {
                     Text("Agree & Continue")
                         .font(.system(size: 20.0, weight: .semibold))
                         .foregroundStyle(.blue)
                 }
+
             }
             .padding(.horizontal, 5.0)
             .navigationBarBackButtonHidden()

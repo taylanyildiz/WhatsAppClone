@@ -8,11 +8,36 @@
 import SwiftUI
 
 struct UserHistoryView: View {
+    let userHistory: UserHistory
+    private var histories: [History] { userHistory.histories }
+    @StateObject private var storyTimer = StoryTimer(length: 2)
+    
     var body: some View {
-        Text(/*@START_MENU_TOKEN@*/"Hello, World!"/*@END_MENU_TOKEN@*/)
+        var size = UIScreen.main.bounds.size
+        ZStack(alignment: .top) {
+            AsyncImage(url: URL(string: histories[Int(storyTimer.progress)].image)) { data in
+                if let image = data.image {
+                    image
+                        .resizable()
+                        .scaledToFill()
+                        
+                } else if let error = data.error {
+                    Text(error.localizedDescription)
+                } else {
+                    ProgressView()
+                }
+            }
+            .frame(width: size.width, height: size.height)
+            .ignoresSafeArea(.all)
+            HistoryIndicator(progress: storyTimer.progress, length: histories.count)
+                .padding(.top, 30)
+        }
+        .onAppear {
+            self.storyTimer.start()
+        }
     }
 }
 
 #Preview {
-    UserHistoryView()
+    UserHistoryView(userHistory: userHistories.first!)
 }

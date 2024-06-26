@@ -9,8 +9,28 @@ import SwiftUI
 
 struct UserHistoryContain: View {
     var userHistory: UserHistory
+    private var user: User { userHistory.user }
+    private var histories: [History] { userHistory.histories }
+    private var lastHistory: History { histories.last! }
+    
     var body: some View {
-        Text(/*@START_MENU_TOKEN@*/"Hello, World!"/*@END_MENU_TOKEN@*/)
+        HStack {
+            ZStack {
+                CircleAvatar(
+                    url: lastHistory.image
+                )
+                .padding(3)
+                .background(
+                    Circle()
+                        .fill(.accent)
+                )
+            }
+            VStack(alignment: .leading) {
+                Text(user.name)
+                Text("3h ago")
+            }
+            Spacer()
+        }
     }
 }
 
