@@ -8,11 +8,21 @@
 import SwiftUI
 
 struct Icon: View {
+    private let icon: Icons
+    private let size: Double
+    
+    init(_ icon: Icons, size: Double? = nil) {
+        self.icon = icon
+        self.size = size ?? 30.0
+    }
+    
     var body: some View {
-        Text(/*@START_MENU_TOKEN@*/"Hello, World!"/*@END_MENU_TOKEN@*/)
+        Image(icon.rawValue)
+            .resizable()
+            .frame(width: size, height: size)
     }
 }
 
 #Preview {
-    Icon()
+    Icon(Icons.meta)
 }

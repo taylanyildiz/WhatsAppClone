@@ -7,20 +7,31 @@
 
 import SwiftUI
 
-struct ChatsFilter: View {
-    @State private var selection: Int = 0
+struct ChatsFilterPicker: View {
+    @Binding private var selection: ChatFilter
+    init(selection: Binding<ChatFilter>?) {
+        _selection = selection ?? .constant(.all)
+    }
     var body: some View {
-        Picker("", selection: $selection) {
-            ForEach(0...2, id: \.self) { data in
-                Text("\(data)")
-                    .tag(data)
+        HStack {
+            ForEach(ChatFilter.allCases, id: \.self) { filter in
+                Button {
+                    selection = filter
+                } label: {
+                    Text("\(filter.title)")
+                        .tag(filter)
+                        .font(.subheadline.bold())
+                        .foregroundStyle(.white)
+                        .padding(.vertical, 5.0)
+                        .padding(.horizontal, 10.0)
+                }
+                .background( selection == filter ? .accent : Color(.systemGray))
+                .clipShape(.rect(cornerRadius: 40.0))
             }
         }
-        .scrollContentBackground(.hidden)
-        .pickerStyle(.segmented)
     }
 }
 
 #Preview {
-    ChatsFilter()
+    ChatsFilterPicker(selection: .constant(.groups))
 }

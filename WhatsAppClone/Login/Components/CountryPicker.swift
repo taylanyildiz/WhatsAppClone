@@ -8,11 +8,37 @@
 import SwiftUI
 
 struct CountryPicker: View {
-    var body: some View {
-        Text(/*@START_MENU_TOKEN@*/"Hello, World!"/*@END_MENU_TOKEN@*/)
+    @Binding var selection: Locale.Region
+    @Environment(\.locale) private var locale: Locale
+    
+    
+    
+    init(selection: Binding<Locale.Region>) {
+        _selection = selection
     }
-}
-
-#Preview {
-    CountryPicker()
+    
+    private var regions: [Locale.Region] {
+        Locale.Region.isoRegions.filter({ 
+            locale.localizedString(forIdentifier: $0.identifier) != nil
+        })
+    }
+    
+    private var selectionCountryName: String {
+        locale.localizedString(forRegionCode: selection.identifier) ?? ""
+    }
+    
+    var body: some View {
+        Picker("", selection: $selection) {
+            ForEach(regions, id: \.identifier) { region in
+                HStack(spacing: 0.0) {
+                    Text(locale.localizedString(forRegionCode: region.identifier)!)
+                        .foregroundStyle(.blue)
+                    Spacer()
+                    Text(getCountryPhoneCode(region.identifier))
+                }
+                    .tag(region)
+            }
+        }
+        .pickerStyle(.navigationLink)
+    }
 }

@@ -9,7 +9,24 @@ import SwiftUI
 
 struct WelcomeView: View {
     var body: some View {
-        Text(/*@START_MENU_TOKEN@*/"Hello, World!"/*@END_MENU_TOKEN@*/)
+        NavigationStack {
+            VStack(spacing: 20.0) {
+                WelcomeIcon()
+                Text("Welcome to WhatsApp")
+                    .font(.title)
+                    .fontWeight(.bold)
+                WelcomeText()
+                Button {
+                    
+                } label: {
+                    Text("Agree & Continue")
+                        .font(.system(size: 20.0, weight: .semibold))
+                        .foregroundStyle(.blue)
+                }
+            }
+            .padding(.horizontal, 5.0)
+            .navigationBarBackButtonHidden()
+        }
     }
 }
 

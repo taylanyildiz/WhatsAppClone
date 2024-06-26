@@ -10,7 +10,7 @@ import Foundation
 enum Icons: String, Hashable, Identifiable {
     var id: String { self.rawValue }
     
-    case whatsappCircle = "whatsAppCircle"
+    case whatsappCircle = "whatsappCircle"
     case whatsAppBlack = "whatsAppBlack"
     case meta = "meta"
     
